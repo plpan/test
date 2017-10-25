@@ -1,4 +1,4 @@
-package: test
+package: test/test_go
 import:
 - package: github.com/go-sql-driver/mysql
 - package: golang.org/x/net

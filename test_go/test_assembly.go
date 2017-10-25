@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    "test/assembly"
+    "test/test_go/assembly"
 )
 
 func main() {
