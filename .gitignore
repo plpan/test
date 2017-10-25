@@ -1,1 +1,5 @@
-test_log
+/test_log/
+/test_go/.idea/
+/test_go/cmake-build-debug/
+
+/test_go/CMakeLists.txt
