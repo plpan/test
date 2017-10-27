@@ -3,3 +3,4 @@
 /test_go/cmake-build-debug/
 
 /test_go/CMakeLists.txt
+test_main
