@@ -1,6 +1,7 @@
 /test_log/
-/test_go/.idea/
-/test_go/cmake-build-debug/
+.idea/
+cmake-build-debug/
 
-/test_go/CMakeLists.txt
+CMakeLists.txt
+.DS_Store
 test_main

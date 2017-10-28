@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package grpc;
+
+message URequest {
+    uint64 uid = 1;
+}
+
+message UResponse {
+    string name = 1;
+    uint32 age = 2;
+    uint32 sex = 3;
+}
+
+service Data {
+    rpc GetUserInfo(URequest) returns (UResponse) {}
+    rpc ChangeUserInfo(stream UResponse) returns (stream UResponse) {}
+}
