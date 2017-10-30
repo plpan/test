@@ -1,0 +1,6 @@
+hash: c8dcc8e69f6158c8f07934a5d8e7d3dd136b85a72844281b4b7b95d987886e5f
+updated: 2017-10-30T09:55:30.13136746+08:00
+imports:
+- name: github.com/valyala/gorpc
+  version: 908281bef77441f2d0ec1792189b4032a1dace0c
+testImports: []

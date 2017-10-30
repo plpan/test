@@ -1,0 +1,3 @@
+package: test/test_gorpc
+import:
+- package: github.com/valyala/gorpc
