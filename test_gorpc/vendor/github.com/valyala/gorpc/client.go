@@ -223,6 +223,7 @@ func (c *Client) CallTimeout(request interface{}, timeout time.Duration) (respon
 	t := acquireTimer(timeout)
 
 	select {
+	// clientReader读取到response之后，就会关闭m.Done信道
 	case <-m.Done:
 		response, err = m.Response, m.Error
 		releaseAsyncResult(m)
@@ -644,6 +645,7 @@ func clientHandler(c *Client) {
 		dialChan := make(chan struct{})
 		go func() {
 			if conn, err = c.Dial(c.Addr); err != nil {
+				// 获取最近一次Store的值，如果没有Store操作，则返回nil
 				if stopping.Load() == nil {
 					c.LogError("gorpc.Client: [%s]. Cannot establish rpc connection: [%s]", c.Addr, err)
 				}
@@ -656,6 +658,7 @@ func clientHandler(c *Client) {
 			stopping.Store(true)
 			<-dialChan
 			return
+			// 正常情况走这里，dial次数+1
 		case <-dialChan:
 			c.Stats.incDialCalls()
 		}
@@ -713,6 +716,7 @@ func clientHandleConnection(c *Client, conn io.ReadWriteCloser) {
 	readerDone := make(chan error, 1)
 	go clientReader(c, conn, pendingRequests, &pendingRequestsLock, readerDone)
 
+	// 当任意一方(读、写、client)退出时，关闭其他方的连接
 	select {
 	case err = <-writerDone:
 		close(stopChan)
@@ -826,6 +830,7 @@ func clientWriter(c *Client, w io.Writer, pendingRequests map[uint64]*AsyncResul
 			releaseAsyncResult(m)
 		}
 
+		// gorpc使用gob.Encoder来实现客户端发送数据至服务器，主要是加入压缩等新元素
 		if err = e.Encode(wr); err != nil {
 			err = fmt.Errorf("gorpc.Client: [%s]. Cannot send request to wire: [%s]", c.Addr, err)
 			return
@@ -850,6 +855,7 @@ func clientReader(c *Client, r io.Reader, pendingRequests map[uint64]*AsyncResul
 
 	var wr wireResponse
 	for {
+		// gorpc使用gob.Decoder来实现客户端读取服务器返回的响应数据
 		if err = d.Decode(&wr); err != nil {
 			err = fmt.Errorf("gorpc.Client: [%s]. Cannot decode response: [%s]", c.Addr, err)
 			return

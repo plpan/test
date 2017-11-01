@@ -155,6 +155,7 @@ func (s *Server) Start() error {
 
 	workersCh := make(chan struct{}, s.Concurrency)
 	s.stopWg.Add(1)
+	// 循环监听
 	go serverHandler(s, workersCh)
 	return nil
 }
@@ -174,6 +175,7 @@ func (s *Server) Serve() error {
 	if err := s.Start(); err != nil {
 		return err
 	}
+	// 保证一直处于listen状态
 	s.stopWg.Wait()
 	return nil
 }
@@ -218,6 +220,7 @@ func serverHandler(s *Server, workersCh chan struct{}) {
 		}
 
 		s.stopWg.Add(1)
+		// 针对每个接收到的连接，开一个goroutine去处理
 		go serverHandleConnection(s, conn, clientAddr, workersCh)
 	}
 }
@@ -226,6 +229,7 @@ func serverHandleConnection(s *Server, conn io.ReadWriteCloser, clientAddr strin
 	defer s.stopWg.Done()
 
 	if s.OnConnect != nil {
+		// 用户自定义的connect和dial函数对（tls，unix），如果没定义，则使用tcp默认的connect和dial
 		newConn, err := s.OnConnect(clientAddr, conn)
 		if err != nil {
 			s.LogError("gorpc.Server: [%s]->[%s]. OnConnect error: [%s]", clientAddr, s.Addr, err)
@@ -242,6 +246,7 @@ func serverHandleConnection(s *Server, conn io.ReadWriteCloser, clientAddr strin
 	zChan := make(chan bool, 1)
 	go func() {
 		var buf [1]byte
+		// 获取握手信息，其实就一个字节，表示传输数据是否压缩
 		if _, err = conn.Read(buf[:]); err != nil {
 			if stopping.Load() == nil {
 				s.LogError("gorpc.Server: [%s]->[%s]. Error when reading handshake from client: [%s]", clientAddr, s.Addr, err)
@@ -366,6 +371,7 @@ func serveRequest(s *Server, responsesChan chan<- *serverMessage, stopChan <-cha
 	m.Request = nil
 	clientAddr := m.ClientAddr
 	m.ClientAddr = ""
+	// 使用消息的ID来区分是否需要返回响应的请求
 	skipResponse := (m.ID == 0)
 
 	if skipResponse {
@@ -376,6 +382,7 @@ func serveRequest(s *Server, responsesChan chan<- *serverMessage, stopChan <-cha
 	}
 
 	t := time.Now()
+	// 调用用户注册的处理函数，处理请求，返回响应
 	response, err := callHandlerWithRecover(s.LogError, s.Handler, clientAddr, s.Addr, request)
 	s.Stats.incRPCTime(uint64(time.Since(t).Seconds() * 1000))
 

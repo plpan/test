@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/valyala/gorpc"
 	"log"
+	"strings"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error when sending message to server: %s", err)
 	}
-	if resp.(string) != message {
+	if resp.(string) != strings.ToLower(message) {
 		log.Fatalf("Error response received from server: %v", resp)
 	}
 	log.Printf("response: %v", resp)
