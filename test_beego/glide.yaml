@@ -1,0 +1,5 @@
+package: test/test_beego
+import:
+- package: github.com/astaxie/beego
+  subpackages:
+  - orm
