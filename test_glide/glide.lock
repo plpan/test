@@ -1,0 +1,25 @@
+hash: 85aea542c3fd60b16491eb6a35d31d874e0246d983559b1f6835d3f204e0c593
+updated: 2017-11-24T17:18:58.062599812+08:00
+imports:
+- name: github.com/fatih/color
+  version: 570b54cabe6b8eb0bc2dfce68d964677d63b5260
+- name: github.com/mattn/go-colorable
+  version: 5411d3eea5978e6cdc258b30de592b60df6aba96
+  repo: https://github.com/mattn/go-colorable
+- name: github.com/mattn/go-isatty
+  version: 57fdcb988a5c543893cc61bce354a6e24ab70022
+  repo: https://github.com/mattn/go-isatty
+- name: github.com/plpan/test
+  version: 1a50c8dfc523559162d456b0e259c54301f1874e
+  subpackages:
+  - test_glide_hierarchy
+- name: github.com/sumory/baseN4go
+  version: 8d01e845085974bca2004a75cc87bc6017d9280f
+- name: github.com/sumory/idgen
+  version: e51875525cc4e394b8ee47b6e3a4c8b0b24eae2e
+- name: golang.org/x/sys
+  version: e24f485414aeafb646f6fca458b0bf869c0880a1
+  repo: https://go.googlesource.com/sys
+  subpackages:
+  - unix
+testImports: []
