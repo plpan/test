@@ -1,13 +1,13 @@
-hash: 1cf338643df50efb307474fbec5b96c2a03b15f273a7b7ceac270d3d00c0774a
-updated: 2017-11-24T16:43:55.897060312+08:00
+hash: b73dbb96593b1f8a9de6ba26d7972b4fe0bc431cb62c6ffaf6f4ca30fcb537dd
+updated: 2017-11-24T18:20:00.812387303+08:00
 imports:
 - name: github.com/fatih/color
-  version: 7824417a424b65227be8ac9b14d545a7f3e6c3f0
+  version: 570b54cabe6b8eb0bc2dfce68d964677d63b5260
 - name: github.com/mattn/go-colorable
   version: 5411d3eea5978e6cdc258b30de592b60df6aba96
   repo: https://github.com/mattn/go-colorable
 - name: github.com/mattn/go-isatty
-  version: dda3de49cbfcec471bd7a70e6cc01fcc3ff90109
+  version: 57fdcb988a5c543893cc61bce354a6e24ab70022
   repo: https://github.com/mattn/go-isatty
 - name: github.com/sumory/baseN4go
   version: 8d01e845085974bca2004a75cc87bc6017d9280f

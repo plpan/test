@@ -2,4 +2,4 @@ package: test/test_glide_hierarchy
 import:
 - package: github.com/sumory/idgen
 - package: github.com/fatih/color
-  version: 1.4.0
+  version: 1.5.0
