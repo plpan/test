@@ -1,0 +1,3 @@
+package: test/test_glide_hierarchy
+import:
+- package: github.com/sumory/idgen
