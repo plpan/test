@@ -33,5 +33,10 @@ func main() {
 	// canfail案例测试，接口转换不成功，但是程序仍然继续执行
 	var empty1 Empty
 	inter, ok := empty1.(Inter)
-	fmt.Println(empty == nil, ok)
+	fmt.Println(inter == nil, ok)
+
+	// not canfail, panic
+	var empty2 Empty
+	inter = empty2.(Inter)
+	fmt.Println(inter == nil)
 }
