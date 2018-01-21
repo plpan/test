@@ -29,4 +29,9 @@ func main() {
 	empty = str
 	// 类型为Str，值为nil，所以不为nil
 	fmt.Println(empty == nil)
+
+	// canfail案例测试，接口转换不成功，但是程序仍然继续执行
+	var empty1 Empty
+	inter, ok := empty1.(Inter)
+	fmt.Println(empty == nil, ok)
 }
