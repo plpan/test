@@ -5,4 +5,3 @@ cmake-build-debug/
 CMakeLists.txt
 .DS_Store
 test_main
-test
