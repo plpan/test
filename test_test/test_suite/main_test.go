@@ -25,7 +25,7 @@ func (u *UserSuite) TearDownTest() {
 	fmt.Println("teardown")
 }
 
-// all test functions of UserSuite receiver will be called when running `go test`
+// all test functions (start with `Test`) of UserSuite receiver will be called when running `go test`
 func (u *UserSuite) TestUser() {
 	fmt.Println("user-defined tests")
 	assert.Equal(u.T(), 2, u.AgeInitial)
