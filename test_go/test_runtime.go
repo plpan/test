@@ -5,7 +5,8 @@ import (
 	"runtime"
 )
 
-func main() {
+func Test_Maxprocs() {
+	fmt.Println("---Test_Maxprocs---")
 	// CPU核数限定了goroutine的并行度，多个goroutine同时执行
 	runtime.GOMAXPROCS(2)
 	// go程序默认只开一个CPU核；除非调用GOMAXPROCS设置最大的CPU核数，这样多个goroutine就可以同时运行了
@@ -13,7 +14,7 @@ func main() {
 
 	// 默认情况下，这个goroutine是没有机会运行的,除非main goroutine执行了GoSched
 	go func() {
-		fmt.Println("go")
+		fmt.Println("another goroutine")
 	}()
 
 	// 这里需要轮训次数多一些，不然上面的goroutine还是没机会执行
@@ -26,4 +27,27 @@ func main() {
 			// runtime.Gosched()
 		}
 	}
+}
+
+func Test_FuncForPC() {
+	fmt.Println("---Test_FuncForPC---")
+	pc, file, line, ok := runtime.Caller(0)
+	if !ok {
+		fmt.Println("runtime caller failed")
+		return
+	}
+	fmt.Printf("file: %v line: %v\n", file, line)
+
+	f := runtime.FuncForPC(pc)
+	if f == nil {
+		fmt.Println("funcforpc nil")
+	}
+
+	fmt.Printf("funcname: %v\n", f.Name())
+}
+
+func main() {
+	Test_Maxprocs()
+
+	Test_FuncForPC()
 }
