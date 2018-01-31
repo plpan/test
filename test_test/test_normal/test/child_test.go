@@ -1,8 +1,8 @@
 package child_test
 
 import (
-	. "test/test_test"
-	"test/test_test/util"
+	. "test/test_test/test_normal"
+	"test/test_test/test_normal/util"
 	"testing"
 )
 

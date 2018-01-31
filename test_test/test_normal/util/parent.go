@@ -2,7 +2,7 @@ package util
 
 import (
 	"fmt"
-	"test/test_test"
+	"test/test_test/test_normal"
 )
 
 func Parent() {
