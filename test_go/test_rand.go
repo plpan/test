@@ -15,6 +15,7 @@ import (
  * 这就是伪随机数的悲惨命运
  *
  * 真正要产生随机数，还得用crypto/rand包下面的随机数生成函数
+ *     注意：crypto/rand产生随机数的方式要比math/rand慢上一个数量级
  */
 
 func main() {
