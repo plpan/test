@@ -4,4 +4,3 @@ cmake-build-debug/
 
 CMakeLists.txt
 .DS_Store
-test_[a-z]*
