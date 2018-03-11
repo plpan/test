@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	src := parse.NewSourceString(`4 /(1 +1 )+ 2`)
+	src := parse.NewSourceString(`1 + 4 /(1 +1 ) + 2`)
 	parsed := parse.Parse(src, parser.NewExprLexer(), 0)
 	fmt.Println(parsed)
 }

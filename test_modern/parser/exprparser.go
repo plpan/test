@@ -35,6 +35,7 @@ func (lexer *exprLexer) Parse(src *parse.Source, precedence int) interface{} {
 }
 
 func (lexer *exprLexer) InfixToken(src *parse.Source) (parse.InfixToken, int) {
+	discard.UnicodeSpace(src)
 	switch src.Peek1() {
 	case '+':
 		return lexer.plus, precedenceSum
@@ -50,6 +51,7 @@ func (lexer *exprLexer) InfixToken(src *parse.Source) (parse.InfixToken, int) {
 }
 
 func (lexer *exprLexer) PrefixToken(src *parse.Source) parse.PrefixToken {
+	discard.UnicodeSpace(src)
 	switch src.Peek1() {
 	case '(':
 		return lexer.group
