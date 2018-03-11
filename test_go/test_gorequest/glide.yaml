@@ -1,4 +1,0 @@
-package: test/test_go/test_gorequest
-import:
-- package: github.com/parnurzeal/gorequest
-  version: ^0.2.15
