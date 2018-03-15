@@ -4,4 +4,5 @@ cmake-build-debug/
 
 CMakeLists.txt
 *.so
+*.o
 .DS_Store
