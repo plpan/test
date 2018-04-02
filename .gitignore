@@ -1,9 +1,11 @@
 /test_log/
 .idea/
 cmake-build-debug/
+vendor/
 
 CMakeLists.txt
 *.so
 *.o
 *.swp
 .DS_Store
+glide.*

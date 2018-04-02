@@ -17,6 +17,15 @@ func handleClient(client *example.AdderClient) error {
 		fmt.Println("error sum: ", err)
 	}
 	fmt.Printf("sum of %d, %d is : %d\n", a, b, sum)
+
+	an := &example.Numbers{1, 2}
+	bn := &example.Numbers{3, 4}
+	sn, err := client.AddNumber(an, bn)
+	if err != nil {
+		fmt.Println("error sum: ", err)
+	}
+	fmt.Printf("sum of %#v, %#v is : %#v\n", an, bn, sn)
+
 	return nil
 }
 
