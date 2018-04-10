@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>WebSocket demo</title>
+</head>
+<body>
+
+    <div>
+        <form>
+            <label for="numberfield">Number</label>
+            <input type="text" id="numberfield" placeholder="12"/><br />
+            <button type="button" id="sendBtn">Send</button>
+        </form>
+    </div>
+    <div id="container"></div>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            var gorilla, golang;
+            if (window.WebSocket == undefined) {
+                $("#container").append("your browser does not support ws");
+                return;
+            } else {
+                gorilla = initWS("ws://127.0.0.1:8010/gorilla");
+                golang = initWS("ws://127.0.0.1:8010/golang");
+            }
+
+            function initWS(host) {
+                var socket = new WebSocket(host), container = $("#container");
+                socket.onopen = function() {
+                    container.append("<p>socket is open</p>");
+                };
+                socket.onmessage = function(e) {
+                    container.append("<p>got something: " + e.data + "</p>");
+                };
+                socket.onclose = function() {
+                    container.append("<p>socket is closed</p>");
+                };
+
+                return socket;
+            }
+
+            $("#sendBtn").click(function (e) {
+                e.preventDefault();
+                gorilla.send(JSON.stringify({Num: parseInt($("#numberfield").val())}));
+                golang.send(JSON.stringify({Num: parseInt($("#numberfield").val())}));
+            })
+        })
+    </script>
+</body>
+</html>
