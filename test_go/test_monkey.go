@@ -1,5 +1,7 @@
 package main
 
+// Reference: https://bou.ke/blog/monkey-patching-in-go/
+
 import (
 	"syscall"
 	"unsafe"
