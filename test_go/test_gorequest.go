@@ -2,30 +2,47 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/parnurzeal/gorequest"
 )
 
-var wg sync.WaitGroup
-
 func testRequest() {
-	r := gorequest.New()
-	r.Transport.DisableKeepAlives = true
-	r.Timeout(time.Millisecond * 1000).Get("http://www.baidu.com")
-	_, _, err := r.End()
-	if err != nil {
-		fmt.Println(err)
+	goreq := gorequest.New()
+	goreq.Transport.MaxIdleConns = 2
+	goreq.Transport.IdleConnTimeout = 20 * time.Second
+	goreq.Transport.MaxIdleConnsPerHost = 2
+	goreq.Get("http://www.baidu.com").End()
+}
+
+func testHttpReq() {
+	tr := &http.Transport{
+		MaxIdleConns:        4,
+		IdleConnTimeout:     2 * time.Second,
+		DisableCompression:  true,
+		MaxIdleConnsPerHost: 2,
 	}
+	client := &http.Client{Transport: tr}
+	resp, err := client.Get("http://www.baidu.com")
+	body, err := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+	fmt.Printf("%#v\n", resp.Body)
+	fmt.Printf("%#v %v\n", string(body[:100]), err)
+}
 
-	fmt.Println("Request done, open files =", countOpenFiles())
-
-	wg.Done()
+func main() {
+	for {
+		go testRequest()
+		//go testHttpReq()
+		time.Sleep(1 * time.Second)
+		fmt.Println("Request done, open files =", countOpenFiles())
+	}
 }
 
 func countOpenFiles() int {
@@ -35,12 +52,4 @@ func countOpenFiles() int {
 	}
 	lines := strings.Split(string(out), "\n")
 	return len(lines) - 1
-}
-
-func main() {
-	for i := 0; i < 1000; i = i + 1 {
-		wg.Add(1)
-		go testRequest()
-	}
-	wg.Wait()
 }
