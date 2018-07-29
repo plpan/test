@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"test/test_modern/parser"
+
+	"github.com/pplonepiece/test/test_modern/parser"
 
 	"github.com/modern-go/parse"
 )
